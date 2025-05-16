@@ -1,66 +1,101 @@
-import { Link } from 'react-router-dom'
-import { ShoppingCart, User } from 'lucide-react'
+import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { ShoppingCart, Menu, X, User } from 'lucide-react'
 import { Button } from './ui/button'
 import { useCartStore } from '../store/cart'
+import { Sheet, SheetContent, SheetTrigger } from './ui/sheet'
+import { Badge } from './ui/badge'
 
 const Navbar = () => {
+  const location = useLocation()
   const { items } = useCartStore()
-  const cartItemCount = items.length
-
+  const [isOpen, setIsOpen] = useState(false)
+  
+  const navigation = [
+    { name: 'Home', href: '/' },
+    { name: 'Products', href: '/#products' },
+    { name: 'Dashboard', href: '/dashboard' },
+  ]
+  
+  const isActive = (path: string) => {
+    if (path === '/') return location.pathname === '/'
+    return location.pathname.startsWith(path)
+  }
+  
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="h-6 w-6 text-primary"
-          >
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-            <polyline points="3.29 7 12 12 20.71 7" />
-            <line x1="12" y1="22" x2="12" y2="12" />
-          </svg>
-          <span className="text-xl font-bold">DigitalMarket</span>
-        </Link>
-        
-        <nav className="hidden md:flex md:gap-6">
-          <Link to="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            Home
+        <div className="flex items-center gap-6 md:gap-10">
+          <Link to="/" className="flex items-center space-x-2">
+            <span className="text-xl font-bold">DigitalMarket</span>
           </Link>
-          <Link to="/categories" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            Categories
-          </Link>
-          <Link to="/about" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
-            About
-          </Link>
-        </nav>
+          
+          <nav className="hidden gap-6 md:flex">
+            {navigation.map((item) => (
+              <Link
+                key={item.name}
+                to={item.href}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  isActive(item.href) ? 'text-primary' : 'text-muted-foreground'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+        </div>
         
         <div className="flex items-center gap-4">
-          <Link to="/cart">
+          <Link to="/cart" className="relative">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              {cartItemCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
-                  {cartItemCount}
-                </span>
+              {items.length > 0 && (
+                <Badge className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full p-0">
+                  {items.length}
+                </Badge>
               )}
             </Button>
           </Link>
+          
           <Link to="/dashboard">
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
             </Button>
           </Link>
-          <Link to="/checkout">
-            <Button className="hidden sm:inline-flex">Checkout</Button>
-          </Link>
+          
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
+                <Menu className="h-5 w-5" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right">
+              <div className="flex flex-col space-y-4 py-4">
+                <Link 
+                  to="/" 
+                  className="flex items-center space-x-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="text-xl font-bold">DigitalMarket</span>
+                </Link>
+                <div className="flex flex-col space-y-3">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.href}
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isActive(item.href) ? 'text-primary' : 'text-muted-foreground'
+                      }`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
