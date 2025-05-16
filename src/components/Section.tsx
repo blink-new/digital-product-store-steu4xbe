@@ -7,6 +7,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   className?: string
   containerSize?: 'default' | 'small' | 'large'
   containerClassName?: string
+  centered?: boolean
 }
 
 const Section = ({
@@ -14,6 +15,7 @@ const Section = ({
   className,
   containerSize = 'default',
   containerClassName,
+  centered = false,
   ...props
 }: SectionProps) => {
   return (
@@ -21,7 +23,13 @@ const Section = ({
       className={cn('py-8 md:py-12', className)}
       {...props}
     >
-      <Container size={containerSize} className={containerClassName}>
+      <Container 
+        size={containerSize} 
+        className={cn(
+          { 'text-center': centered },
+          containerClassName
+        )}
+      >
         {children}
       </Container>
     </section>

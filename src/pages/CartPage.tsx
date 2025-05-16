@@ -27,7 +27,7 @@ const CartPage = () => {
   
   if (items.length === 0) {
     return (
-      <Section containerClassName="flex flex-col items-center py-16 text-center">
+      <Section centered={true} className="py-16">
         <ShoppingBag className="h-16 w-16 text-muted-foreground" />
         <h1 className="mt-4 text-2xl font-bold">Your cart is empty</h1>
         <p className="mt-2 text-muted-foreground">

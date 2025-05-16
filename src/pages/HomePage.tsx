@@ -21,13 +21,13 @@ const HomePage = () => {
       {/* Hero section */}
       <Section 
         className="bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 section-hero"
-        containerClassName="flex flex-col items-center text-center"
+        centered={true}
       >
         <h1 className="text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">Premium Digital Products for Creators</h1>
-        <p className="mt-6 max-w-3xl text-lg text-muted-foreground">
+        <p className="mt-6 max-w-3xl mx-auto text-lg text-muted-foreground">
           Discover high-quality templates, assets, and tools to accelerate your projects and enhance your creative workflow.
         </p>
-        <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+        <div className="mt-8 flex flex-col gap-4 sm:flex-row justify-center">
           <Button size="lg" className="gap-2">
             <ShoppingBag className="h-5 w-5" />
             Browse Products
@@ -49,8 +49,8 @@ const HomePage = () => {
       </Section>
       
       {/* Benefits section */}
-      <Section className="bg-primary/5">
-        <h2 className="mb-12 text-center text-3xl font-bold">Why Choose Our Digital Products</h2>
+      <Section className="bg-primary/5" centered={true}>
+        <h2 className="mb-12 text-3xl font-bold">Why Choose Our Digital Products</h2>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="flex flex-col items-center text-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
@@ -118,10 +118,10 @@ const HomePage = () => {
       {/* Call to action */}
       <Section 
         className="bg-primary" 
-        containerClassName="flex flex-col items-center text-center"
+        centered={true}
       >
         <h2 className="text-3xl font-bold text-primary-foreground">Ready to Enhance Your Projects?</h2>
-        <p className="mt-4 max-w-2xl text-primary-foreground/90">
+        <p className="mt-4 max-w-2xl mx-auto text-primary-foreground/90">
           Browse our collection of premium digital products and take your work to the next level.
         </p>
         <Button size="lg" variant="secondary" className="mt-8">

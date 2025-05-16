@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { products } from '../data/products'
 import { Product } from '../store/cart'
 import Section from '../components/Section'
+import Container from '../components/Container'
 
 // Mock purchased products
 const mockPurchases = [
@@ -87,6 +88,34 @@ const DashboardPage = () => {
     )
   }
   
+  const renderLoading = () => (
+    <div className="flex h-64 items-center justify-center text-center">
+      <div className="flex flex-col items-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+        <p className="mt-4 text-muted-foreground">Loading your purchases...</p>
+      </div>
+    </div>
+  )
+
+  const renderEmptyState = () => (
+    <div className="flex h-64 flex-col items-center justify-center text-center">
+      <ExternalLink className="h-12 w-12 text-muted-foreground" />
+      <h2 className="mt-4 text-xl font-semibold">No purchases yet</h2>
+      <p className="mt-2 text-muted-foreground">
+        {searchQuery ? 'No results found for your search.' : 'You haven\'t made any purchases yet.'}
+      </p>
+      {searchQuery && (
+        <Button 
+          variant="ghost"
+          className="mt-4"
+          onClick={() => setSearchQuery('')}
+        >
+          Clear Search
+        </Button>
+      )}
+    </div>
+  )
+  
   return (
     <Section>
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
@@ -114,31 +143,8 @@ const DashboardPage = () => {
         </TabsList>
         
         <TabsContent value="all" className="mt-0">
-          {loading ? (
-            <div className="flex h-64 items-center justify-center">
-              <div className="flex flex-col items-center">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-                <p className="mt-4 text-muted-foreground">Loading your purchases...</p>
-              </div>
-            </div>
-          ) : filteredPurchases.length === 0 ? (
-            <div className="flex h-64 flex-col items-center justify-center text-center">
-              <ExternalLink className="h-12 w-12 text-muted-foreground" />
-              <h2 className="mt-4 text-xl font-semibold">No purchases yet</h2>
-              <p className="mt-2 text-muted-foreground">
-                {searchQuery ? 'No results found for your search.' : 'You haven\'t made any purchases yet.'}
-              </p>
-              {searchQuery && (
-                <Button 
-                  variant="ghost"
-                  className="mt-4"
-                  onClick={() => setSearchQuery('')}
-                >
-                  Clear Search
-                </Button>
-              )}
-            </div>
-          ) : (
+          {loading ? renderLoading() : 
+           filteredPurchases.length === 0 ? renderEmptyState() : (
             <div className="space-y-4">
               {filteredPurchases.map(purchase => (
                 <div key={purchase.id} className="overflow-hidden rounded-lg border bg-background">
@@ -182,14 +188,7 @@ const DashboardPage = () => {
         </TabsContent>
         
         <TabsContent value="recent" className="mt-0">
-          {loading ? (
-            <div className="flex h-64 items-center justify-center">
-              <div className="flex flex-col items-center">
-                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
-                <p className="mt-4 text-muted-foreground">Loading your purchases...</p>
-              </div>
-            </div>
-          ) : (
+          {loading ? renderLoading() : (
             <div className="space-y-4">
               {filteredPurchases
                 .sort((a, b) => new Date(b.purchaseDate).getTime() - new Date(a.purchaseDate).getTime())

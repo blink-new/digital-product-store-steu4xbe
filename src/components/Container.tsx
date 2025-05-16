@@ -19,7 +19,7 @@ const Container = ({
         'w-full mx-auto px-4 md:px-6',
         {
           'max-w-7xl': size === 'large',
-          'max-w-6xl': size === 'default',
+          'max-w-screen-lg': size === 'default',
           'max-w-4xl': size === 'small',
         },
         className

@@ -48,7 +48,7 @@ const ProductPage = () => {
   
   if (loading) {
     return (
-      <Section>
+      <Section centered={true}>
         <div className="flex min-h-[50vh] items-center justify-center">
           <div className="flex flex-col items-center">
             <div className="h-10 w-10 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
@@ -61,7 +61,7 @@ const ProductPage = () => {
   
   if (!product) {
     return (
-      <Section>
+      <Section centered={true}>
         <div className="flex min-h-[50vh] flex-col items-center justify-center">
           <AlertCircle className="h-16 w-16 text-muted-foreground" />
           <h2 className="mt-4 text-2xl font-bold">Product Not Found</h2>
