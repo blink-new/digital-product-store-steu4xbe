@@ -5,6 +5,7 @@ import { Input } from '../components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { products } from '../data/products'
 import { Product } from '../store/cart'
+import Section from '../components/Section'
 
 // Mock purchased products
 const mockPurchases = [
@@ -87,7 +88,7 @@ const DashboardPage = () => {
   }
   
   return (
-    <div className="container py-8">
+    <Section>
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold">My Downloads</h1>
@@ -234,7 +235,7 @@ const DashboardPage = () => {
           )}
         </TabsContent>
       </Tabs>
-    </div>
+    </Section>
   )
 }
 

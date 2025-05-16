@@ -4,6 +4,7 @@ import { Button } from '../components/ui/button'
 import { Separator } from '../components/ui/separator'
 import { useCartStore } from '../store/cart'
 import { toast } from 'sonner'
+import Section from '../components/Section'
 
 const CartPage = () => {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ const CartPage = () => {
   
   if (items.length === 0) {
     return (
-      <div className="container flex flex-col items-center py-16 text-center">
+      <Section containerClassName="flex flex-col items-center py-16 text-center">
         <ShoppingBag className="h-16 w-16 text-muted-foreground" />
         <h1 className="mt-4 text-2xl font-bold">Your cart is empty</h1>
         <p className="mt-2 text-muted-foreground">
@@ -37,12 +38,12 @@ const CartPage = () => {
             <ShoppingCart className="mr-2 h-4 w-4" /> Browse Products
           </Button>
         </Link>
-      </div>
+      </Section>
     )
   }
   
   return (
-    <div className="container py-8">
+    <Section>
       {/* Breadcrumb */}
       <div className="mb-6">
         <Link to="/" className="flex items-center text-sm text-muted-foreground transition-colors hover:text-primary">
@@ -143,7 +144,7 @@ const CartPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Section>
   )
 }
 

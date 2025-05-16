@@ -7,6 +7,7 @@ import { Separator } from '../components/ui/separator'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { toast } from 'sonner'
+import Section from '../components/Section'
 
 const CheckoutPage = () => {
   const navigate = useNavigate()
@@ -81,7 +82,7 @@ const CheckoutPage = () => {
   }
   
   return (
-    <div className="container py-8">
+    <Section>
       {/* Breadcrumb */}
       <div className="mb-6">
         <Link to="/cart" className="flex items-center text-sm text-muted-foreground transition-colors hover:text-primary">
@@ -264,7 +265,7 @@ const CheckoutPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Section>
   )
 }
 
